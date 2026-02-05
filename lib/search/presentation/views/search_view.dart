@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movies_app/core/presentation/components/error_text.dart';
 import 'package:movies_app/core/presentation/components/loading_indicator.dart';
 import 'package:movies_app/core/resources/app_values.dart';
@@ -25,10 +26,27 @@ class SearchView extends StatelessWidget {
 class SearchWidget extends StatelessWidget {
   const SearchWidget({super.key});
 
+  void _goBack(BuildContext context) {
+    if (context.canPop()) {
+      context.pop();
+    } else {
+      context.go('/movies');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: const Color(0xFF141414),
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => _goBack(context),
+          ),
+          title: const Text('Search', style: TextStyle(color: Colors.white)),
+        ),
         body: Padding(
           padding: const EdgeInsets.only(
             top: AppPadding.p12,

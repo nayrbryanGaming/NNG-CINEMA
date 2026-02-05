@@ -18,6 +18,8 @@ import 'package:movies_app/core/presentation/components/loading_indicator.dart';
 import 'package:movies_app/core/presentation/components/details_card.dart';
 import 'package:movies_app/core/presentation/components/section_title.dart';
 import 'package:movies_app/core/services/service_locator.dart';
+import 'package:go_router/go_router.dart';
+import 'package:movies_app/core/resources/app_routes.dart';
 
 class MovieDetailsView extends StatelessWidget {
   final int movieId;
@@ -66,22 +68,72 @@ class MovieDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          DetailsCard(
-            mediaDetails: movieDetails,
-            detailsWidget: MovieCardDetails(movieDetails: movieDetails),
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DetailsCard(
+                mediaDetails: movieDetails,
+                detailsWidget: MovieCardDetails(movieDetails: movieDetails),
+              ),
+              getOverviewSection(movieDetails.overview),
+              _getCast(movieDetails.cast),
+              _getReviews(movieDetails.reviews),
+              getSimilarSection(movieDetails.similar),
+              const SizedBox(height: AppSize.s8),
+            ],
           ),
-          getOverviewSection(movieDetails.overview),
-          _getCast(movieDetails.cast),
-          _getReviews(movieDetails.reviews),
-          getSimilarSection(movieDetails.similar),
-          const SizedBox(height: AppSize.s8),
-        ],
-      ),
+        ),
+        // Back button positioned on top
+        Positioned(
+          top: 40,
+          left: 16,
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(0,0,0,128),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+        ),
+        // Bottom shortcut bar: open cinemas (buy tickets)
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: SafeArea(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              color: const Color.fromRGBO(0,0,0,153),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        // Navigate to cinemas list to start ticket purchase flow
+                        // pass movieDetails as extra for potential pre-selection
+                        context.pushNamed(AppRoutes.cinemasRoute, extra: movieDetails);
+                      },
+                      icon: const Icon(Icons.theaters_rounded),
+                      label: const Text('Bioskop'),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        backgroundColor: Colors.red,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

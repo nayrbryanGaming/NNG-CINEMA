@@ -19,6 +19,7 @@ class WatchlistView extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<WatchlistBloc>()..add(GetWatchListItemsEvent()),
       child: Scaffold(
+        backgroundColor: const Color(0xFF141414), // Explicit background
         appBar: const CustomAppBar(
           title: AppStrings.watchlist,
         ),

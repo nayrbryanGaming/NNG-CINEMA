@@ -7,7 +7,16 @@ abstract class RecommendationEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetWeatherRecommendationEvent extends RecommendationEvent {}
+/// Event to get weather-based recommendations
+/// Set [forceRefresh] to true to bypass cache (e.g., when user manually taps refresh button)
+class GetWeatherRecommendationEvent extends RecommendationEvent {
+  final bool forceRefresh;
+
+  const GetWeatherRecommendationEvent({this.forceRefresh = false});
+
+  @override
+  List<Object> get props => [forceRefresh];
+}
 
 class SearchEvent extends RecommendationEvent {
   final String query;

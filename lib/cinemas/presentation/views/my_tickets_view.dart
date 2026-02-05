@@ -33,6 +33,30 @@ class _MyTicketsViewState extends State<MyTicketsView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Tickets'),
+        actions: [
+          IconButton(
+            tooltip: 'Clear all tickets (debug)',
+            icon: const Icon(Icons.delete_forever),
+            onPressed: () async {
+              final confirm = await showDialog<bool>(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  title: const Text('Clear all tickets?'),
+                  content: const Text('This will delete all saved tickets locally. Continue?'),
+                  actions: [
+                    TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: const Text('Cancel')),
+                    TextButton(onPressed: () => Navigator.of(ctx).pop(true), child: const Text('Yes')),
+                  ],
+                ),
+              );
+              if (confirm == true) {
+                final ticketService = sl<TicketService>();
+                await ticketService.clearAllTickets();
+                _loadTickets();
+              }
+            },
+          ),
+        ],
       ),
       body: FutureBuilder<List<TicketOrder>>(
         future: _ticketsFuture,
@@ -72,7 +96,13 @@ class _MyTicketsViewState extends State<MyTicketsView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(ticket.movieShowtime.title, style: Theme.of(context).textTheme.headlineSmall),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(ticket.movieShowtime.title, style: Theme.of(context).textTheme.headlineSmall),
+                            Text(ticket.orderId, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                          ],
+                        ),
                         const SizedBox(height: 8),
                         Text(ticket.cinema.name, style: Theme.of(context).textTheme.titleMedium),
                         const SizedBox(height: 4),

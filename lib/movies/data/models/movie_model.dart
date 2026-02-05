@@ -23,4 +23,15 @@ class MovieModel extends Media {
         overview: json['overview'] ?? '',
         isMovie: true,
       );
+
+  /// Convert to JSON for cache storage
+  Map<String, dynamic> toJson() => {
+        'id': tmdbID,
+        'title': title,
+        'poster_path': posterUrl.isNotEmpty ? posterUrl.split('/').last : null,
+        'backdrop_path': backdropUrl.isNotEmpty ? backdropUrl.split('/').last : null,
+        'vote_average': voteAverage,
+        'release_date': releaseDate,
+        'overview': overview,
+      };
 }

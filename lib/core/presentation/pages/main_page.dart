@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:movies_app/core/resources/app_router.dart';
-import 'package:movies_app/core/resources/app_strings.dart';
+import 'package:movies_app/core/presentation/pages/pop_scope.dart';
 
 import 'package:movies_app/core/resources/app_routes.dart';
 import 'package:movies_app/core/resources/app_values.dart';
@@ -22,51 +21,65 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WillPopScope(
-        onWillPop: () async {
-          final String location = GoRouterState.of(context).uri.toString();
-          if (!location.startsWith(moviesPath)) {
-            _onItemTapped(0, context);
-          }
-          return true;
-        },
-        child: widget.child,
-      ),
+      backgroundColor: const Color(0xFF141414), // Force dark background
+      body: AppPopScope(canPop: true, child: widget.child),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.red,
+        unselectedItemColor: Colors.grey,
+        selectedFontSize: 11,
+        unselectedFontSize: 11,
         items: const [
           BottomNavigationBarItem(
-            label: AppStrings.movies,
+            label: 'Home',
             icon: Icon(
-              Icons.movie_creation_rounded,
-              size: AppSize.s20,
+              Icons.home_outlined,
+              size: AppSize.s22,
+            ),
+            activeIcon: Icon(
+              Icons.home,
+              size: AppSize.s22,
             ),
           ),
           BottomNavigationBarItem(
-            label: AppStrings.shows,
+            label: 'Bioskop',
             icon: Icon(
-              Icons.tv_rounded,
-              size: AppSize.s20,
+              Icons.theaters_outlined,
+              size: AppSize.s22,
+            ),
+            activeIcon: Icon(
+              Icons.theaters,
+              size: AppSize.s22,
             ),
           ),
           BottomNavigationBarItem(
-            label: AppStrings.cinemas,
+            label: 'F&B',
             icon: Icon(
-              Icons.theaters_rounded,
-              size: AppSize.s20,
+              Icons.fastfood_outlined,
+              size: AppSize.s22,
+            ),
+            activeIcon: Icon(
+              Icons.fastfood,
+              size: AppSize.s22,
             ),
           ),
           BottomNavigationBarItem(
-            label: AppStrings.recommendations, // Changed from search
+            label: 'My NNG',
             icon: Icon(
-              Icons.star_rounded, // Changed from search
-              size: AppSize.s20,
+              Icons.person_outline,
+              size: AppSize.s22,
+            ),
+            activeIcon: Icon(
+              Icons.person,
+              size: AppSize.s22,
             ),
           ),
           BottomNavigationBarItem(
-            label: AppStrings.profile,
+            label: 'Menu',
             icon: Icon(
-              Icons.person_rounded,
-              size: AppSize.s20,
+              Icons.menu,
+              size: AppSize.s22,
             ),
           ),
         ],
@@ -78,21 +91,13 @@ class _MainPageState extends State<MainPage> {
 
   int _getSelectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).uri.toString();
-    if (location.startsWith(moviesPath)) {
-      return 0;
-    }
-    if (location.startsWith(tvShowsPath)) {
-      return 1;
-    }
-    if (location.startsWith(cinemasPath)) {
-      return 2;
-    }
-    if (location.startsWith(recommendationsPath)) { // Changed from search
-      return 3;
-    }
-    if (location.startsWith(profilePath)) {
-      return 4;
-    }
+    if (location.startsWith(AppRoutes.moviesPath)) return 0;
+    // Treat both Cinemas (bioskop) and Tickets as the same section (index 1)
+    if (location.startsWith(AppRoutes.cinemasPath) || location.startsWith(AppRoutes.myTicketsPath)) return 1;
+    // F&B section includes both fnb menu and fnb orders
+    if (location.startsWith(AppRoutes.fnbPath) || location.startsWith(AppRoutes.fnbOrdersPath)) return 2;
+    if (location.startsWith(AppRoutes.profilePath)) return 3; // My NNG -> Profile
+    if (location.startsWith(AppRoutes.menuPath)) return 4;
     return 0;
   }
 
@@ -102,16 +107,18 @@ class _MainPageState extends State<MainPage> {
         context.goNamed(AppRoutes.moviesRoute);
         break;
       case 1:
-        context.goNamed(AppRoutes.tvShowsRoute);
-        break;
-      case 2:
+        // Navigate to Cinemas (bioskop) section; Tickets is accessible inside that flow
         context.goNamed(AppRoutes.cinemasRoute);
         break;
+      case 2:
+        context.goNamed(AppRoutes.fnbRoute);
+        break;
       case 3:
-        context.goNamed(AppRoutes.recommendationsRoute); // Changed from search
+        // My NNG intentionally goes to profile page (My NNG = profile)
+        context.goNamed(AppRoutes.profileRoute);
         break;
       case 4:
-        context.goNamed(AppRoutes.profileRoute);
+        context.goNamed(AppRoutes.menuRoute);
         break;
     }
   }

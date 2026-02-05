@@ -44,4 +44,26 @@ class TicketOrder extends Equatable {
         selectedSeats,
         totalPrice,
       ];
+
+  Map<String, dynamic> toJson() {
+    return {
+      'orderId': orderId,
+      'cinema': {
+        'name': cinema.name,
+      },
+      'movieShowtime': {
+        'movieId': movieShowtime.movieId,
+        'title': movieShowtime.title,
+        'posterUrl': movieShowtime.posterUrl,
+        'showtimes': movieShowtime.showtimes,
+      },
+      'selectedTime': selectedTime,
+      'selectedSeats': selectedSeats.map((seat) => {
+        'id': seat.id,
+        'seatNumber': seat.seatNumber,
+        'status': seat.status.toString(),
+      }).toList(),
+      'totalPrice': totalPrice,
+    };
+  }
 }

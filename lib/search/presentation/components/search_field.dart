@@ -38,19 +38,19 @@ class _SearchFieldState extends State<SearchField> {
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: AppColors.primaryText,
+              color: Colors.white,
             ),
             borderRadius: BorderRadius.circular(AppSize.s8),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: AppColors.primaryText,
+              color: Colors.white,
             ),
             borderRadius: BorderRadius.circular(AppSize.s8),
           ),
           prefixIcon: const Icon(
             Icons.search_rounded,
-            color: AppColors.primaryText,
+            color: Colors.white,
           ),
           suffixIcon: GestureDetector(
             onTap: () {
@@ -59,7 +59,7 @@ class _SearchFieldState extends State<SearchField> {
             },
             child: const Icon(
               Icons.clear_rounded,
-              color: AppColors.primaryText,
+              color: Colors.white,
             ),
           ),
           hintText: AppStrings.searchHint,

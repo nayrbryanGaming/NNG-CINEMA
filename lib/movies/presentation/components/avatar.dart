@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/core/resources/app_colors.dart';
 import 'package:movies_app/core/resources/app_values.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -18,7 +17,7 @@ class Avatar extends StatelessWidget {
       imageUrl: avatarUrl,
       imageBuilder: (context, imageProvider) => CircleAvatar(
         radius: AppSize.s20,
-        backgroundColor: Colors.transparent, // Changed from AppColors.transparent
+        backgroundColor: Colors.transparent,
         backgroundImage: imageProvider,
       ),
       placeholder: (context, _) => Shimmer.fromColors(
@@ -28,9 +27,10 @@ class Avatar extends StatelessWidget {
           radius: AppSize.s20,
         ),
       ),
-      errorWidget: (_, __, ___) => const Icon(
-        Icons.error,
-        color: AppColors.primary, // Changed from AppColors.error
+      errorWidget: (_, __, ___) => CircleAvatar(
+        radius: AppSize.s20,
+        backgroundColor: Colors.grey.shade900,
+        backgroundImage: const AssetImage('assets/images/icon.png'),
       ),
     );
   }

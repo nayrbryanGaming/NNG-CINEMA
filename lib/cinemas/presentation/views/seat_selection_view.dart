@@ -178,7 +178,7 @@ class _SeatSelectionViewState extends State<SeatSelectionView> {
                   onPressed: _selectedSeats.isNotEmpty
                       ? () {
                           final order = TicketOrder(
-                            orderId: 'CGV-${DateTime.now().millisecondsSinceEpoch}',
+                            orderId: 'CGV-${widget.movieShowtime.movieId}-${DateTime.now().millisecondsSinceEpoch}-${(Random().nextInt(9000)+1000)}',
                             cinema: widget.cinema,
                             movieShowtime: widget.movieShowtime,
                             selectedTime: widget.selectedTime,

@@ -1,7 +1,9 @@
 import 'package:movies_app/tv_shows/domain/usecases/get_season_details_usecase.dart';
 
 class ApiConstants {
-  static const String apiKey = 'd000dd5c3f54386b8a69ba68dff8553b';
+  // TMDB API Key - loaded from environment variable for security
+  // Run with: flutter run --dart-define=TMDB_API_KEY=your_api_key
+  static const String apiKey = String.fromEnvironment('TMDB_API_KEY', defaultValue: '');
   static const String baseUrl = 'https://api.themoviedb.org/3';
 
   static const String baseBackdropUrl = 'https://image.tmdb.org/t/p/w1280';
@@ -18,31 +20,31 @@ class ApiConstants {
       'https://palmbayprep.org/wp-content/uploads/2015/09/user-icon-placeholder.png';
 
   static const String avatarPlaceHolder =
-      'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049__480.png';
+      'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
 
   static const String stillPlaceHolder =
       'https://popcornsg.s3.amazonaws.com/gallery/1577405144-six-year.png';
 
-  // movies paths
+  // movies paths - Use region=ID to get movies currently playing in Indonesian cinemas
   static const String nowPlayingMoviesPath =
-      '$baseUrl/movie/now_playing?api_key=$apiKey';
+      '$baseUrl/movie/now_playing?api_key=$apiKey&region=ID&language=id-ID';
 
   static const String popularMoviesPath =
-      '$baseUrl/movie/popular?api_key=$apiKey';
+      '$baseUrl/movie/popular?api_key=$apiKey&region=ID&language=id-ID';
 
   static const String topRatedMoviesPath =
-      '$baseUrl/movie/top_rated?api_key=$apiKey';
+      '$baseUrl/movie/top_rated?api_key=$apiKey&region=ID&language=id-ID';
 
   static String getMovieDetailsPath(int movieId) {
-    return '$baseUrl/movie/$movieId?api_key=$apiKey&append_to_response=videos,credits,reviews,similar';
+    return '$baseUrl/movie/$movieId?api_key=$apiKey&append_to_response=videos,credits,reviews,similar&language=id-ID';
   }
 
   static String getAllPopularMoviesPath(int page) {
-    return '$baseUrl/movie/popular?api_key=$apiKey&page=$page';
+    return '$baseUrl/movie/popular?api_key=$apiKey&page=$page&region=ID&language=id-ID';
   }
 
   static String getAllTopRatedMoviesPath(int page) {
-    return '$baseUrl/movie/top_rated?api_key=$apiKey&page=$page';
+    return '$baseUrl/movie/top_rated?api_key=$apiKey&page=$page&region=ID&language=id-ID';
   }
 
   // tv shows paths

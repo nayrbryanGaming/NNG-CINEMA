@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/presentation/components/error_text.dart';
 import 'package:movies_app/core/presentation/components/image_with_shimmer.dart';
 import 'package:movies_app/core/presentation/components/loading_indicator.dart';
-import 'package:movies_app/core/resources/app_colors.dart';
 import 'package:movies_app/core/resources/app_strings.dart';
 import 'package:movies_app/core/resources/app_values.dart';
 import 'package:movies_app/core/services/service_locator.dart';
@@ -85,7 +84,7 @@ class SeasonCard extends StatelessWidget {
             ),
             const Icon(
               Icons.arrow_forward_ios_rounded,
-              color: AppColors.primaryText,
+              color: Colors.white,
               size: AppSize.s18,
             )
           ],
@@ -98,8 +97,8 @@ class SeasonCard extends StatelessWidget {
 void _showBottomSheet(context, id, seasonNumber) {
   showCustomBottomSheet(
     context,
-    BlocProvider.value(
-      value: sl<TVShowDetailsBloc>()
+    BlocProvider<TVShowDetailsBloc>(
+      create: (context) => sl<TVShowDetailsBloc>()
         ..add(GetSeasonDetailsEvent(id: id, seasonNumber: seasonNumber)),
       child: BlocBuilder<TVShowDetailsBloc, TVShowDetailsState>(
         builder: (context, state) {

@@ -22,7 +22,12 @@ class TVShowsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<TVShowsBloc>()..add(GetTVShowsEvent()),
+      create: (context) {
+        final bloc = sl<TVShowsBloc>();
+        // Trigger event immediately but non-blocking
+        Future.microtask(() => bloc.add(GetTVShowsEvent()));
+        return bloc;
+      },
       child: Scaffold(
         body: BlocBuilder<TVShowsBloc, TVShowsState>(
           builder: (context, state) {
@@ -106,3 +111,4 @@ class TVShowsWidget extends StatelessWidget {
     );
   }
 }
+

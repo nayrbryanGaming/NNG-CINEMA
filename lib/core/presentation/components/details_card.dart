@@ -19,6 +19,15 @@ class DetailsCard extends StatelessWidget {
   final MediaDetails mediaDetails;
   final Widget detailsWidget;
 
+  String _normalizeTrailer(String input) {
+    if (input.isEmpty) return input;
+    // If already a full URL, return
+    if (input.startsWith('http')) return input;
+    // If it's a youtu.be short id or plain id, convert to watch URL
+    final id = input.replaceAll(RegExp(r"(https?:\/\/)?(www\.)?(youtu\.be\/|youtube\.com\/(watch\?v=)?)"), '');
+    return 'https://www.youtube.com/watch?v=$id';
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -78,23 +87,55 @@ class DetailsCard extends StatelessWidget {
                       ),
                     ),
                     if (mediaDetails.trailerUrl.isNotEmpty) ...[
-                      InkWell(
-                        onTap: () async {
-                          final url = Uri.parse(mediaDetails.trailerUrl);
-                          if (await canLaunchUrl(url)) {
-                            await launchUrl(url);
-                          }
-                        },
-                        child: Container(
-                          height: AppSize.s40,
-                          width: AppSize.s40,
-                          decoration: const BoxDecoration(
-                            color: AppColors.primary,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.play_arrow_rounded,
-                            color: AppColors.secondaryText,
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () async {
+                            try {
+                              final normalized = _normalizeTrailer(mediaDetails.trailerUrl);
+                              final url = Uri.parse(normalized);
+
+                              // Use external browser for best compatibility
+                              if (await canLaunchUrl(url)) {
+                                await launchUrl(
+                                  url,
+                                  mode: LaunchMode.externalApplication,
+                                );
+                              } else {
+                                // cannot launch at all
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Trailer tidak tersedia di perangkat ini'),
+                                      duration: Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
+                              }
+                            } catch (e) {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Error membuka trailer: $e'),
+                                    duration: const Duration(seconds: 2),
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          borderRadius: BorderRadius.circular(AppSize.s20),
+                          child: Container(
+                            height: AppSize.s40,
+                            width: AppSize.s40,
+                            decoration: const BoxDecoration(
+                              color: AppColors.primary,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.play_arrow_rounded,
+                              color: AppColors.secondaryText,
+                              size: 28,
+                            ),
                           ),
                         ),
                       ),
@@ -135,7 +176,7 @@ class DetailsCard extends StatelessWidget {
                     mediaDetails.isAdded
                         ? context
                             .read<WatchlistBloc>()
-                            .add(RemoveWatchListItemEvent(mediaDetails.id!))
+                            .add(RemoveWatchListItemEvent(mediaDetails.id!, tmdbId: mediaDetails.tmdbID))
                         : context.read<WatchlistBloc>().add(
                               AddWatchListItemEvent(
                                   media: Media.fromMediaDetails(mediaDetails)),

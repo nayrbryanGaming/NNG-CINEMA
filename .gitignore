@@ -18,20 +18,21 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# VS Code
+.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
 /build/
 /coverage/
+.packages
+.metadata
 
 # Symbolication related
 app.*.symbols
@@ -43,3 +44,56 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Environment and API Keys - CRITICAL SECURITY
+.env
+.env.local
+.env.development
+.env.production
+*.env
+local.properties
+
+# Firebase configuration files with sensitive data
+google-services.json
+GoogleService-Info.plist
+
+# API Keys storage
+**/secrets/
+**/keys/
+api_keys.dart
+secrets.dart
+
+# Documentation files with sensitive data - DO NOT UPLOAD
+DIAGNOSIS_MASALAH.txt
+BUKTI_TIDAK_ADA_YANG_DIHAPUS.txt
+TMDB_API_LINKS.txt
+
+# Build outputs
+*.apk
+*.aab
+*.ipa
+*.app
+
+# iOS
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Podfile.lock
+
+# macOS
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Windows
+**/windows/flutter/generated_plugin_registrant.cc
+**/windows/flutter/generated_plugin_registrant.h
+**/windows/flutter/generated_plugins.cmake
+
+# Linux
+**/linux/flutter/generated_plugin_registrant.cc
+**/linux/flutter/generated_plugin_registrant.h
+**/linux/flutter/generated_plugins.cmake
+
+# Web
+**/web/firebase-config.js
+

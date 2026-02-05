@@ -15,6 +15,7 @@ import 'package:movies_app/tv_shows/presentation/components/seasons_section.dart
 import 'package:movies_app/tv_shows/presentation/components/tv_show_card_details.dart';
 
 import 'package:movies_app/tv_shows/presentation/controllers/tv_show_details_bloc/tv_show_details_bloc.dart';
+import 'package:movies_app/core/presentation/utils/color_utils.dart';
 
 class TVShowDetailsView extends StatelessWidget {
   const TVShowDetailsView({
@@ -63,31 +64,50 @@ class TVShowDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          DetailsCard(
-            mediaDetails: tvShowDetails,
-            detailsWidget: TVShowCardDetails(
-              genres: tvShowDetails.genres,
-              lastEpisode: tvShowDetails.lastEpisodeToAir!,
-              seasons: tvShowDetails.seasons!,
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DetailsCard(
+                mediaDetails: tvShowDetails,
+                detailsWidget: TVShowCardDetails(
+                  genres: tvShowDetails.genres,
+                  lastEpisode: tvShowDetails.lastEpisodeToAir!,
+                  seasons: tvShowDetails.seasons!,
+                ),
+              ),
+              getOverviewSection(tvShowDetails.overview),
+              const SectionTitle(title: AppStrings.lastEpisodeOnAir),
+              EpisodeCard(episode: tvShowDetails.lastEpisodeToAir!),
+              const SectionTitle(title: AppStrings.seasons),
+              SeasonsSection(
+                tmdbID: tvShowDetails.tmdbID,
+                seasons: tvShowDetails.seasons!,
+              ),
+              getSimilarSection(tvShowDetails.similar),
+              const SizedBox(height: AppSize.s8),
+            ],
+          ),
+        ),
+        // Back button positioned on top
+        Positioned(
+          top: 40,
+          left: 16,
+          child: Container(
+            decoration: BoxDecoration(
+              color: withOpacityColor(Colors.black, 0.5),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () => Navigator.pop(context),
             ),
           ),
-          getOverviewSection(tvShowDetails.overview),
-          const SectionTitle(title: AppStrings.lastEpisodeOnAir),
-          EpisodeCard(episode: tvShowDetails.lastEpisodeToAir!),
-          const SectionTitle(title: AppStrings.seasons),
-          SeasonsSection(
-            tmdbID: tvShowDetails.tmdbID,
-            seasons: tvShowDetails.seasons!,
-          ),
-          getSimilarSection(tvShowDetails.similar),
-          const SizedBox(height: AppSize.s8),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

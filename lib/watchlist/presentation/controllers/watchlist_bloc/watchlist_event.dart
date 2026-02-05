@@ -22,11 +22,12 @@ class AddWatchListItemEvent extends WatchlistEvent {
 
 class RemoveWatchListItemEvent extends WatchlistEvent {
   final int index;
+  final int tmdbId;
 
-  const RemoveWatchListItemEvent(this.index);
+  const RemoveWatchListItemEvent(this.index, {required this.tmdbId});
 
   @override
-  List<Object?> get props => [index];
+  List<Object?> get props => [index, tmdbId];
 }
 
 class CheckItemAddedEvent extends WatchlistEvent {

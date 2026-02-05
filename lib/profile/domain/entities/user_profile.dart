@@ -26,6 +26,9 @@ class UserProfile extends Equatable {
   @HiveField(6)
   final List<String> coupons;
 
+  @HiveField(7)
+  final bool hasChangedUsername;
+
   const UserProfile({
     required this.userId,
     required this.name,
@@ -34,6 +37,7 @@ class UserProfile extends Equatable {
     required this.bannerUrl,
     this.usernameLastChanged,
     this.coupons = const [],
+    this.hasChangedUsername = false,
   });
 
   UserProfile copyWith({
@@ -42,6 +46,8 @@ class UserProfile extends Equatable {
     String? profilePictureUrl,
     String? bannerUrl,
     DateTime? usernameLastChanged,
+    bool? hasChangedUsername,
+    List<String>? coupons,
   }) {
     return UserProfile(
       userId: userId,
@@ -50,7 +56,8 @@ class UserProfile extends Equatable {
       profilePictureUrl: profilePictureUrl ?? this.profilePictureUrl,
       bannerUrl: bannerUrl ?? this.bannerUrl,
       usernameLastChanged: usernameLastChanged ?? this.usernameLastChanged,
-      coupons: coupons,
+      coupons: coupons ?? this.coupons,
+      hasChangedUsername: hasChangedUsername ?? this.hasChangedUsername,
     );
   }
 
@@ -63,5 +70,6 @@ class UserProfile extends Equatable {
         bannerUrl,
         usernameLastChanged,
         coupons,
+        hasChangedUsername,
       ];
 }

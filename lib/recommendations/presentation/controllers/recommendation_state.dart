@@ -15,11 +15,12 @@ class RecommendationLoading extends RecommendationState {}
 class RecommendationLoaded extends RecommendationState {
   final List<Media> movies;
   final String title;
+  final String? reason; // explanation built from WeatherInfo
 
-  const RecommendationLoaded(this.movies, this.title);
+  const RecommendationLoaded(this.movies, this.title, {this.reason});
 
   @override
-  List<Object> get props => [movies, title];
+  List<Object> get props => [movies, title, reason ?? ''];
 }
 
 class RecommendationError extends RecommendationState {

@@ -1,0 +1,27 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Profile images - users can only upload/read their own profile images
+    match /profile_images/{userId}.jpg {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId
+                   && request.resource.size < 5 * 1024 * 1024 // Max 5MB
+                   && request.resource.contentType.matches('image/.*');
+    }
+
+    // Ticket JSON files - users can only access their own tickets
+    match /tickets/{ticketId}.json {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null
+                   && request.resource.size < 1 * 1024 * 1024 // Max 1MB
+                   && request.resource.contentType == 'application/json';
+    }
+
+    // Deny all other access by default
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

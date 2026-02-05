@@ -24,13 +24,14 @@ class UserProfileAdapter extends TypeAdapter<UserProfile> {
       bannerUrl: fields[4] as String,
       usernameLastChanged: fields[5] as DateTime?,
       coupons: (fields[6] as List).cast<String>(),
+      hasChangedUsername: fields[7] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserProfile obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class UserProfileAdapter extends TypeAdapter<UserProfile> {
       ..writeByte(5)
       ..write(obj.usernameLastChanged)
       ..writeByte(6)
-      ..write(obj.coupons);
+      ..write(obj.coupons)
+      ..writeByte(7)
+      ..write(obj.hasChangedUsername);
   }
 
   @override

@@ -38,12 +38,22 @@ class _EditProfileViewState extends State<EditProfileView> {
     super.dispose();
   }
 
-  Future<void> _pickImage(ImageSource source, Function(String) onImagePicked) async {
+  Future<void> _pickProfileImage() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: source);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
-        onImagePicked(pickedFile.path);
+        _newProfileImagePath = pickedFile.path;
+      });
+    }
+  }
+
+  Future<void> _pickBannerImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _newBannerImagePath = pickedFile.path;
       });
     }
   }
@@ -69,14 +79,21 @@ class _EditProfileViewState extends State<EditProfileView> {
       }
 
       if (canChangeUsername) {
-        final updatedProfile = widget.profile.copyWith(
+        // Use new path if picked, otherwise keep old value
+        final newProfilePic = _newProfileImagePath ?? widget.profile.profilePictureUrl;
+        final newBanner = _newBannerImagePath ?? widget.profile.bannerUrl;
+
+        final updatedProfile = UserProfile(
+          userId: widget.profile.userId,
           name: _nameController.text,
           username: _usernameController.text,
-          profilePictureUrl: _newProfileImagePath,
-          bannerUrl: _newBannerImagePath,
+          profilePictureUrl: newProfilePic,
+          bannerUrl: newBanner,
           usernameLastChanged: _usernameController.text != widget.profile.username
               ? DateTime.now()
               : widget.profile.usernameLastChanged,
+          coupons: widget.profile.coupons,
+          hasChangedUsername: widget.profile.hasChangedUsername,
         );
 
         await profileService.saveProfile(updatedProfile);
@@ -153,7 +170,7 @@ class _EditProfileViewState extends State<EditProfileView> {
         alignment: Alignment.center,
         children: [
           InkWell(
-            onTap: () => _pickImage(ImageSource.gallery, (path) => _newBannerImagePath = path),
+            onTap: _pickBannerImage,
             child: Container(
               height: 200,
               decoration: BoxDecoration(
@@ -169,7 +186,7 @@ class _EditProfileViewState extends State<EditProfileView> {
           Positioned(
             bottom: 0,
             child: InkWell(
-              onTap: () => _pickImage(ImageSource.gallery, (path) => _newProfileImagePath = path),
+              onTap: _pickProfileImage,
               child: CircleAvatar(
                 radius: 60,
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -187,10 +204,17 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 
   ImageProvider _buildImageProvider(String url) {
+    if (url.isEmpty) {
+      return const AssetImage('assets/images/placeholder.png');
+    }
     if (url.startsWith('http')) {
       return NetworkImage(url);
     } else {
-      return FileImage(File(url));
+      final file = File(url);
+      if (file.existsSync()) {
+        return FileImage(file);
+      }
+      return const AssetImage('assets/images/placeholder.png');
     }
   }
 }

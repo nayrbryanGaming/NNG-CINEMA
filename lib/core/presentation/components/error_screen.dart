@@ -24,7 +24,7 @@ class ErrorScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: AppPadding.p18),
             child: Image.asset(
-              'assets/images/icon.png',
+              'assets/images/nng.png',
               width: double.infinity,
               height: AppSize.s150,
             ),
