@@ -118,8 +118,10 @@ class ServiceLocator {
     sl.registerFactory(() => SearchBloc(sl()));
 
     // Services
-    // Weather API Key - OpenWeatherMap
-    const weatherApiKey = 'bd5e378503939ddaee76f12ad7a97608';
+    // Weather API Key - OpenWeatherMap (ENV with fallback)
+    const envWeatherApiKey = String.fromEnvironment('WEATHER_API_KEY', defaultValue: '');
+    const fallbackWeatherApiKey = 'bd5e378503939ddaee76f12ad7a97608';
+    final weatherApiKey = envWeatherApiKey.isEmpty ? fallbackWeatherApiKey : envWeatherApiKey;
 
     if (kDebugMode) {
       print('[ServiceLocator] Weather API Key configured: YES');
