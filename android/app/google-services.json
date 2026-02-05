@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "994610973675",
+    "project_id": "nng-cinema",
+    "storage_bucket": "nng-cinema.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994610973675:android:5a0d90a249cc100793e7ae",
+        "android_client_info": {
+          "package_name": "com.nng_cinema"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994610973675-ldhbbtt449p7t2hjnkq9f6ak5a3c5hra.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nng_cinema",
+            "certificate_hash": "0ba57abccf8d090087a05c6d124f4805c2cdfc0f"
+          }
+        },
+        {
+          "client_id": "994610973675-qtocp02fmdo2e2uq2ih5tq8svl9fn89f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9VqRd_vU6q1g1t1CoHQJU-2XEX5PxHhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994610973675-qtocp02fmdo2e2uq2ih5tq8svl9fn89f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "994610973675-v1io7o8ctfifkgctam5noerbt8aa79km.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bioskopAppModern"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

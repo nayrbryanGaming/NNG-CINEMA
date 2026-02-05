@@ -119,16 +119,10 @@ class ServiceLocator {
 
     // Services
     // Weather API Key - OpenWeatherMap
-    // Must be provided via environment variable for security
-    const envWeatherApiKey = String.fromEnvironment('WEATHER_API_KEY', defaultValue: '');
-    final String weatherApiKey = envWeatherApiKey;
+    const weatherApiKey = 'bd5e378503939ddaee76f12ad7a97608';
 
     if (kDebugMode) {
-      if (weatherApiKey.isEmpty) {
-        print('[ServiceLocator] WARNING: WEATHER_API_KEY not configured. Weather features will be disabled.');
-      } else {
-        print('[ServiceLocator] Weather API Key configured: YES');
-      }
+      print('[ServiceLocator] Weather API Key configured: YES');
     }
     sl.registerLazySingleton<WeatherService>(() => WeatherService(apiKey: weatherApiKey, client: http.Client()));
     sl.registerLazySingleton<TicketService>(() => TicketService());

@@ -88,9 +88,6 @@ lib/
 - Dart SDK >= 3.0.0
 - Android SDK (API Level 21+)
 - Xcode 14+ (for iOS development)
-- Firebase project configuration
-- TMDB API access
-- OpenWeatherMap API access
 
 ---
 
@@ -109,62 +106,16 @@ cd NNG-CINEMA
 flutter pub get
 ```
 
-### 3. Environment Configuration
-
-Copy the environment template and configure your API keys:
+### 3. Run Application
 
 ```bash
-cp .env.example .env
+flutter run
 ```
 
-Edit `.env` with your credentials:
-
-```env
-TMDB_API_KEY=your_tmdb_api_key
-WEATHER_API_KEY=your_openweathermap_api_key
-FIREBASE_API_KEY=your_firebase_api_key
-FIREBASE_APP_ID=your_firebase_app_id
-FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-FIREBASE_PROJECT_ID=your_firebase_project_id
-FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
-```
-
-### 4. Firebase Setup
-
-Configure Firebase for your project:
+### 4. Build Release APK
 
 ```bash
-flutterfire configure
-```
-
-Ensure `google-services.json` is placed in `android/app/` directory.
-
-### 5. Run Application
-
-Development mode with environment variables:
-
-```bash
-flutter run \
-  --dart-define=TMDB_API_KEY=your_key \
-  --dart-define=WEATHER_API_KEY=your_key \
-  --dart-define=FIREBASE_API_KEY=your_key \
-  --dart-define=FIREBASE_APP_ID=your_app_id \
-  --dart-define=FIREBASE_MESSAGING_SENDER_ID=your_sender_id \
-  --dart-define=FIREBASE_PROJECT_ID=your_project_id \
-  --dart-define=FIREBASE_STORAGE_BUCKET=your_bucket
-```
-
-### 6. Build Release
-
-```bash
-flutter build apk --release \
-  --dart-define=TMDB_API_KEY=your_key \
-  --dart-define=WEATHER_API_KEY=your_key \
-  --dart-define=FIREBASE_API_KEY=your_key \
-  --dart-define=FIREBASE_APP_ID=your_app_id \
-  --dart-define=FIREBASE_MESSAGING_SENDER_ID=your_sender_id \
-  --dart-define=FIREBASE_PROJECT_ID=your_project_id \
-  --dart-define=FIREBASE_STORAGE_BUCKET=your_bucket
+flutter build apk --release
 ```
 
 ---
@@ -180,26 +131,6 @@ The recommendation engine maps weather conditions to movie categories:
 | Hot | >= 30C | Light entertainment, Action, Comedy |
 | Clear | Any | Popular releases, Adventure, Sci-Fi |
 | Cloudy | Any | Recently released titles, Mystery, Thriller |
-
----
-
-## Security Configuration
-
-### API Key Management
-- All API keys are loaded via compile-time environment variables
-- No hardcoded credentials in source code
-- `.gitignore` configured to exclude sensitive files
-
-### Firebase Security Rules
-- Firestore rules enforce user-level data isolation
-- Storage rules restrict access to authenticated users
-- Authentication state managed securely via Firebase Auth
-
-### Recommended Practices
-- Rotate API keys periodically
-- Use Firebase App Check for production
-- Implement rate limiting on backend services
-- Enable Firebase Security Rules in production mode
 
 ---
 
@@ -220,9 +151,21 @@ NNG-CINEMA/
 │   └── main.dart           # Application entry point
 ├── assets/                  # Static assets (images, fonts)
 ├── test/                    # Unit and widget tests
-├── .env.example            # Environment variables template
 └── pubspec.yaml            # Package configuration
 ```
+
+---
+
+## App Screens
+
+- **Home**: Weather-based movie recommendations with current weather display
+- **Movies**: Browse popular, now playing, and top-rated movies
+- **TV Shows**: Discover trending TV series
+- **Search**: Advanced movie and TV show search functionality
+- **Watchlist**: Your saved favorite movies and shows
+- **Cinemas**: Browse cinema locations and book tickets
+- **F&B**: Order food and beverages
+- **Profile**: User account, rewards, and preferences management
 
 ---
 
@@ -242,19 +185,19 @@ flutter test --coverage
 
 ---
 
-## API Documentation
+## API References
 
 ### TMDB API
 - Documentation: https://developer.themoviedb.org/docs
-- API Key Registration: https://www.themoviedb.org/settings/api
+- Provides comprehensive movie and TV show data
 
 ### OpenWeatherMap API
 - Documentation: https://openweathermap.org/api
-- API Key Registration: https://openweathermap.org/appid
+- Provides real-time weather data for recommendations
 
 ### Firebase
 - Documentation: https://firebase.google.com/docs
-- Console: https://console.firebase.google.com
+- Provides authentication, database, and storage services
 
 ---
 
@@ -299,5 +242,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-Version 1.0.0 | Last Updated: February 2026
+Version 1.0.0 | 2026
 
