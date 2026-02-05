@@ -1,9 +1,7 @@
 import 'package:movies_app/tv_shows/domain/usecases/get_season_details_usecase.dart';
 
 class ApiConstants {
-  // TMDB API Key - Use environment variable or fallback to hardcoded key
-  static const String _envKey = String.fromEnvironment('TMDB_API_KEY', defaultValue: '');
-  static const String apiKey = _envKey.isEmpty ? 'd000dd5c3f54386b8a69ba68dff8553b' : _envKey;
+  static const String apiKey = 'd000dd5c3f54386b8a69ba68dff8553b';
   static const String baseUrl = 'https://api.themoviedb.org/3';
 
   static const String baseBackdropUrl = 'https://image.tmdb.org/t/p/w1280';
