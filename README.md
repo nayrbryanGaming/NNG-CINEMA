@@ -1,28 +1,57 @@
-# NNG-CINEMA
+# NNG Cinema — Educational Simulation Project (Flutter)
 
-A modern Flutter cinema application featuring intelligent weather-based movie recommendations, real-time search, and comprehensive entertainment management.
+NNG Cinema is a Flutter-based educational project designed to simulate how a cinema ticket booking and entertainment management application could be architected.
 
-## Features
+This project is created for learning purposes to demonstrate:
+- Clean Architecture in Flutter
+- BLoC state management
+- API integration patterns
+- Firebase integration patterns
+- UI/UX for a cinema booking scenario
 
-- Weather-based movie recommendation engine
-- Real-time movie search with TMDB integration
-- Now Playing, Popular, and Top Rated movies
-- TV Shows browsing and details
-- User authentication with Firebase and Google Sign-In
-- Cloud-synced watchlist management
-- Cinema ticket booking system
-- Food and beverage ordering
-- User profile and rewards system
-- Admin dashboard
+> ⚠️ IMPORTANT NOTICE  
+> This application is a **simulation project only**.  
+> It does NOT connect to real cinemas, payment systems, or real booking services.  
+> All data used in this app is dummy or publicly available demo data for learning and demonstration.
 
-## Tech Stack
+---
 
-- Flutter 3.x / Dart
-- Firebase (Auth, Firestore, Storage)
-- BLoC State Management
+## Educational Objectives
+
+This project demonstrates how to structure a medium-to-large Flutter application with multiple features such as:
+
+- Movie browsing (demo data)
+- Search system (API demo)
+- Watchlist management (Firebase demo)
+- Weather-based recommendation logic (concept demo)
+- Cinema seat selection UI simulation
+- Food & beverage ordering UI simulation
+- Admin dashboard UI simulation
+
+---
+
+## Tech Stack Demonstrated
+
+- Flutter / Dart
+- BLoC Pattern
 - Clean Architecture
-- TMDB API
-- OpenWeatherMap API
+- Firebase (demonstration use)
+- TMDB API (public movie data for demo)
+- OpenWeatherMap API (demo logic)
+
+---
+
+## Project Purpose
+
+NNG Cinema is intended for:
+- Students learning Flutter architecture
+- Developers studying BLoC & Clean Architecture
+- Demonstration of multi-feature mobile app structure
+- Portfolio and educational showcase
+
+This is NOT a commercial product.
+
+---
 
 ## Getting Started
 
@@ -33,29 +62,14 @@ flutter pub get
 flutter run
 ```
 
-## Project Structure
-
-```
-lib/
-├── core/           # Shared utilities and services
-├── movies/         # Movies feature
-├── tv_shows/       # TV Shows feature
-├── search/         # Search functionality
-├── recommendations/# Weather-based recommendations
-├── auth/           # Authentication
-├── profile/        # User profile
-├── cinemas/        # Cinema and ticketing
-├── fnb/            # Food and beverage
-├── watchlist/      # Watchlist management
-├── admin/          # Admin dashboard
-└── main.dart       # Entry point
-```
+---
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
+MIT License
+
+---
 
 ## Author
 
-Nayr Bryan Gaming - [@nayrbryanGaming](https://github.com/nayrbryanGaming)
-
+Nayr Bryan Gaming (@nayrbryanGaming)
